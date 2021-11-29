@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CityHall;
+use App\Models\Activity;
 use Exception;
 use Illuminate\Http\Request;
 
-class CityHallController extends Controller
+class ActivityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,13 @@ class CityHallController extends Controller
     public function index()
     {
         try{
-            $cityHalls = CityHall::with('contacts')
-            ->orderBy('social_reason','asc')
+            $activities = Activity::orderBy('scheduled_date','desc')
+            ->orderBy('postponed_date','desc')
+            ->orderBy('status','asc')
+            ->orderBy('id','desc')
             ->paginate(12);
-            
-            return response()->json(['data' => $cityHalls]);
+
+            return response()->json(['data' => $activities]);
         }catch(Exception $e){
             return response()->json(['error' => $e->getMessage()]);
         }
@@ -34,13 +36,7 @@ class CityHallController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $cityHall = CityHall::create($request->all());
-            $cityHall->contacts()->create($request->all());
-            return response()->json(['success' => 'Prefeitura registrada com sucesso']);
-        }catch(Exception $e){
-            return response()->json(['error' => $e->getMessage()]);
-        }
+        //
     }
 
     /**
@@ -63,13 +59,7 @@ class CityHallController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
-            $cityHall = CityHall::find($id);
-            $cityHall->update($request->all());
-            return response()->json(['success'=>'Prefeitura Atualizada com sucesso']);
-        }catch(Exception $e){
-            return response()->json(['erro'=>$e->getMessage()]);
-        }
+        //
     }
 
     /**
@@ -80,12 +70,6 @@ class CityHallController extends Controller
      */
     public function destroy($id)
     {
-        try{
-            $cityHall = CityHall::find($id);
-            $cityHall->delete();
-            return response()->json(['success'=>'Prefeitura deletada com sucesso']);
-        }catch(Exception $e){
-            return response()->json(['error'=>$e->getMessage()]);
-        }
+        //
     }
 }
