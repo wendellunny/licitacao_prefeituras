@@ -81,6 +81,12 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $activity = Activity::find($id);
+            $activity->delete();
+            return response()->json(['success' => 'Atividade Atualizada com sucesso']);
+        }catch(Exception $e){
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 }
