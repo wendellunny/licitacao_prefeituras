@@ -15,13 +15,14 @@ class CreateCityHallsTable extends Migration
     {
         Schema::create('city_halls', function (Blueprint $table) {
             $table->id();
-            $table->string('razao_social');
+            $table->string('social_reason');
             $table->bigInteger('id_city');
             $table->string('city');
-            $table->string('estado');
+            $table->string('uf');
             $table->string('address')->nullable();
             $table->string('number')->nullable();
             $table->string('district')->nullable();
+            $table->integer('population');
             $table->integer('status')->default(1)->comment('1 - Em análise,  2 - Ganha 3 - Não Ganha');
             $table->timestamps();
         });
