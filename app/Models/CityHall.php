@@ -59,4 +59,10 @@ class CityHall extends Model
         });
     }
 
+    public function contacts(){
+        return $this->hasMany(Contact::class,'city_hall_id','id'); 
+    }
+
+    
+
 }

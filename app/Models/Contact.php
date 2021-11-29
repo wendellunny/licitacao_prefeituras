@@ -14,4 +14,8 @@ class Contact extends Model
         'contact_type',
         'city_hall_id',
     ];
+
+    protected function CityHall(){
+        return $this->hasOne(CityHall::class,'id','city_hall_id');
+    }
 }
