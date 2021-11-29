@@ -76,6 +76,12 @@ class CityHallController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $cityHall = CityHall::find($id);
+            $cityHall->delete();
+            return response()->json(['success'=>'Prefeitura deletada com sucesso']);
+        }catch(Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
     }
 }
