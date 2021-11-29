@@ -17,4 +17,8 @@ class Activity extends Model
         'postponed_date' ,
         'city_hall_id',
     ];
+
+    public function cityHall(){
+        return $this->hasOne(CityHall::class,'id','city_hall_id');
+    }
 }

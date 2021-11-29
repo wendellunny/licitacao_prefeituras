@@ -36,7 +36,12 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            Activity::create($request->all());
+            return response()->json(['success' => 'Atividade registrada com Sucesso']);
+        }catch(Exception $e){
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -59,7 +64,13 @@ class ActivityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $activity = Activity::find($id);
+            $activity->update($request->all());
+            return response()->json(['success' => 'Atividade Atualizada com Sucesso']);
+        }catch(Exception $e){
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     /**

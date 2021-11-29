@@ -62,6 +62,10 @@ class CityHall extends Model
     public function contacts(){
         return $this->hasMany(Contact::class,'city_hall_id','id'); 
     }
+    
+    public function activities(){
+        return $this->hasMany(Activity::class,'city_hall_id','id');
+    }
 
     
 
