@@ -35,6 +35,13 @@ class CityHall extends Model
             $cityHall->uf = $dataCity['uf']; 
             $cityHall->population = $dataCity['population'];
         });
+
+        static::updating(function($cityHall){
+            $dataCity = self::getDataCity($cityHall->id_city);
+            $cityHall->city = $dataCity['city'];
+            $cityHall->uf = $dataCity['uf']; 
+            $cityHall->population = $dataCity['population'];
+        });
     }
 
     protected static function getDataCity($id_city){

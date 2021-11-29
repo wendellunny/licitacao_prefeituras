@@ -59,7 +59,13 @@ class CityHallController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $cityHall = CityHall::find($id);
+            $cityHall->update($request->all());
+            return response()->json(['success'=>'Prefeitura Atualizada com sucesso']);
+        }catch(Exception $e){
+            return response()->json(['erro'=>$e->getMessage()]);
+        }
     }
 
     /**
