@@ -16,7 +16,7 @@ class ActivityController extends Controller
     public function index()
     {
         try{
-            $activities = Activity::orderBy('scheduled_date','desc')
+            $activities = Activity::with('cityHall')->orderBy('scheduled_date','desc')
             ->orderBy('postponed_date','desc')
             ->orderBy('status','asc')
             ->orderBy('id','desc')
@@ -84,7 +84,7 @@ class ActivityController extends Controller
         try{
             $activity = Activity::find($id);
             $activity->delete();
-            return response()->json(['success' => 'Atividade Atualizada com sucesso']);
+            return response()->json(['success' => 'Atividade Deletada com sucesso']);
         }catch(Exception $e){
             return response()->json(['error' => $e->getMessage()]);
         }
