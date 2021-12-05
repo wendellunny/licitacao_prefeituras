@@ -53,4 +53,32 @@ trait IBGE{
         $population = $data[0]->resultados[0]->series[0]->serie->{$year};
         return $population;
     }
+
+    protected static function getCityDataLabels($id_city){
+        $data = Http::get( CITY_API_URL . $id_city );
+        $dataLabels = self::cleanCityDataLabels($data->object());
+        return $dataLabels;
+    }
+
+    protected static function cleanCityDataLabels($data){
+        $ufSigla = $data->microrregiao->mesorregiao->UF->sigla;
+        $ufNome = $data->microrregiao->mesorregiao->UF->nome; 
+        $inputUf = [
+            'value' => $ufSigla,
+            'label' => $ufSigla . ' - ' . $ufNome
+        ]; 
+        $inputCity = [
+
+            'value' => $data->id,
+            'label' => $data->nome,
+            
+        ]; 
+
+        return [
+            'inputUf' => $inputUf,
+            'inputCity' => $inputCity
+        ];
+
+        
+    }
 }

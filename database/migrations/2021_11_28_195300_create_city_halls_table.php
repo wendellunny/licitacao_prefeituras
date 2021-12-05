@@ -19,6 +19,7 @@ class CreateCityHallsTable extends Migration
             $table->bigInteger('id_city');
             $table->string('city');
             $table->string('uf');
+            $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('number')->nullable();
             $table->string('district')->nullable();

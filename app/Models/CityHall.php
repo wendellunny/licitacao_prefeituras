@@ -15,9 +15,7 @@ class CityHall extends Model
         'id_city',
         'city',
         'estado',
-        'address',
-        'number',
-        'district',
+        'phone',
         'population',
         'status',
     ];
@@ -59,10 +57,17 @@ class CityHall extends Model
         });
     }
 
-    public function contacts(){
-        return $this->hasMany(Contact::class,'city_hall_id','id'); 
+    public static function findInputs($id){
+        $city = CityHall::find($id);
+        $labels = self::getCityDataLabels($city->id_city);
+
+        return [
+            'social_reason' => $city->social_reason,
+            'phone' => $city->phone,
+            'labels' => $labels
+        ];
     }
-    
+
     public function activities(){
         return $this->hasMany(Activity::class,'city_hall_id','id');
     }

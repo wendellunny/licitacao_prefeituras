@@ -84,7 +84,7 @@ class ActivityController extends Controller
         try{
             $activity = Activity::find($id);
             $activity->delete();
-            return response()->json(['success' => 'Atividade Deletada com sucesso']);
+            return response()->json(['success' => 'Atividade Delet com sucesso']);
         }catch(Exception $e){
             return response()->json(['error' => $e->getMessage()]);
         }

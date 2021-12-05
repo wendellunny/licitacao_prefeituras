@@ -16,10 +16,9 @@ class CityHallController extends Controller
     public function index()
     {
         try{
-            $cityHalls = CityHall::with('contacts')
-            ->orderBy('social_reason','asc')
+            $cityHalls = CityHall::
+            orderBy('social_reason','asc')
             ->paginate(12);
-            
             return response()->json(['data' => $cityHalls]);
         }catch(Exception $e){
             return response()->json(['error' => $e->getMessage()]);
@@ -35,8 +34,9 @@ class CityHallController extends Controller
     public function store(Request $request)
     {
         try{
-            $cityHall = CityHall::create($request->all());
-            $cityHall->contacts()->create($request->all());
+            // return response()->json($request->all());
+            CityHall::create($request->all());
+         
             return response()->json(['success' => 'Prefeitura registrada com sucesso']);
         }catch(Exception $e){
             return response()->json(['error' => $e->getMessage()]);
@@ -51,7 +51,12 @@ class CityHallController extends Controller
      */
     public function show($id)
     {
-        //
+        try{
+            $cityHall = CityHall::findInputs($id);
+            return response(['data'=>$cityHall]);
+        }catch(Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
     }
 
     /**
