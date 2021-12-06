@@ -23,7 +23,7 @@ class CityHall extends Model
     protected static $statuses = [
         1 => 'Em Análise',
         2 => 'Ganha',
-        3 => 'Não Ganha',
+        3 => 'Perda',
     ];
 
     public function getStatusAttribute($status){

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\CityHall;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,12 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        //
+        try{
+            $activity = Activity::with('cityHall')->find($id);
+            return response()->json(['data'=>$activity]);
+        }catch(Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
     }
 
     /**
@@ -86,6 +92,42 @@ class ActivityController extends Controller
             return response()->json(['success' => 'Atividade Delet com sucesso']);
         }catch(Exception $e){
             return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function setStatus(Request $request,$id){
+        try{
+            $status = $request->status;
+            $activity = Activity::find($id);
+            $activity->status = $status;
+            $activity->save();
+            return response()->json(['success'=>'Status Atualizado Com Sucesso']);
+        }catch(Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+
+    public function setSatisfaction(Request $request,$id){
+        try{
+            $satisfaction = $request->status;
+            $cityHall = CityHall::find($id);
+            $cityHall->status = $satisfaction;
+            $cityHall->save();
+            return response()->json(['success'=>'Satisfação Atualizado Com Sucesso']);
+        }catch(Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+
+    public function setType(Request $request,$id){
+        try{
+            $type = $request->type;
+            $activity = Activity::find($id);
+            $activity->type = $type;
+            $activity->save();
+            return response()->json(['success'=>'Type Atualizado Com Sucesso']);
+        }catch(Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
         }
     }
 }

@@ -22,4 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::apiResource('city-halls', CityHallController::class);
+
+Route::put('activities/{id}/set-type', [ActivityController::class,'setType']);
+Route::put('activities/{id}/set-status', [ActivityController::class,'setStatus']);
+Route::put('activities/{id}/set-satisfaction', [ActivityController::class,'setSatisfaction']);
+
 Route::apiResource('activities', ActivityController::class);
