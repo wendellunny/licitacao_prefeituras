@@ -17,7 +17,6 @@ class ActivityController extends Controller
     {
         try{
             $activities = Activity::with('cityHall')->orderBy('scheduled_date','desc')
-            ->orderBy('postponed_date','desc')
             ->orderBy('status','asc')
             ->orderBy('id','desc')
             ->paginate(12);
