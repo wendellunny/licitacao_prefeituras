@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityHallController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,25 +22,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::apiResource('city-halls', CityHallController::class);
 
-Route::put('activities/{id}/set-type', [ActivityController::class,'setType']);
-Route::put('activities/{id}/set-status', [ActivityController::class,'setStatus']);
-Route::put('activities/{id}/set-satisfaction', [ActivityController::class,'setSatisfaction']);
 
-Route::apiResource('activities', ActivityController::class);
+Route::middleware('jwt.verify')->group(function(){
+    Route::apiResource('city-halls', CityHallController::class);
 
-Route::group([
+    Route::put('activities/{id}/set-type', [ActivityController::class,'setType']);
+    Route::put('activities/{id}/set-status', [ActivityController::class,'setStatus']);
+    Route::put('activities/{id}/set-satisfaction', [ActivityController::class,'setSatisfaction']);
 
-    'middleware' => 'api',
-    'namespace' => 'App\Http\Controllers',
-    'prefix' => 'auth'
-
-], function ($router) {
-
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+    Route::apiResource('activities', ActivityController::class);
+    
+    Route::post('logout', [AuthController::class,'logout'])->name('logout');
+    Route::post('refresh', [AuthController::class,'refresh'])->name('refresh');
+    Route::post('me', [AuthController::class,'me'])->name('me');
 
 });
+Route::post('login', [AuthController::class,'login'])->name('login');
+

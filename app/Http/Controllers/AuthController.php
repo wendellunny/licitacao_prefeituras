@@ -13,10 +13,7 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
+
 
     /**
      * Get a JWT token via given credentials.
@@ -28,7 +25,6 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
         if ($token = $this->guard()->attempt($credentials)) {
             return $this->respondWithToken($token);
         }
